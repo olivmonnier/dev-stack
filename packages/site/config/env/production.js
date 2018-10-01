@@ -392,5 +392,5 @@ module.exports = {
   },
 
 
-
+  jwtExpires: 3600,
 };
