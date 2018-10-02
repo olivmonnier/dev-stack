@@ -27,20 +27,6 @@ module.exports = {
     const req = inputs.req;
     const res = inputs.res;
 
-    if (req.signedCookies.sailsjwt) {
-      return jwt.verify(req.signedCookies.sailsjwt, sails.config.jwtSecret, async function(err, payload) {
-        if (err || !payload.user) return exits.invalid();
-
-        const user = await User.findOne(payload.user);
-
-        if (!user) return exits.invalid();
-
-        req.user = user;
-
-        return exits.success(user);
-      })
-    }
-
     if (req.header('authorization')) {
       const token = req.header(authorization).split('Bearer ')[1];
 

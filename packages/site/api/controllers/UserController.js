@@ -25,7 +25,6 @@ module.exports = {
 
 	// patch /api/users/logout
 	logout: function(req, res) {
-		res.clearCookie('sailsjwt');
 		req.user = null;
 
 		return res.ok()
@@ -61,11 +60,6 @@ module.exports = {
 				})
 
 				const token = jwt.sign({ user: user.id }, sails.config.jwtSecret, { expiresIn: sails.config.jwtExpires })
-
-				res.cookie('sailsjwt', token, {
-					signed: true,
-					maxAge: sails.config.jwtExpires
-				})
 
 				if (req.wantsJSON) {
 					return res.ok(token)
