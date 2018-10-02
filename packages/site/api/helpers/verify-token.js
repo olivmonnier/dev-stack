@@ -10,12 +10,6 @@ module.exports = {
       friendlyName: 'Request',
       description: 'A reference to the request object (req).',
       required: true
-    },
-    res: {
-      type: 'ref',
-      friendlyName: 'Response',
-      description: 'A reference to the response object (res).',
-      required: true
     }
   },
   exits: {
@@ -25,9 +19,8 @@ module.exports = {
   },
   fn: function(inputs, exits) {
     const req = inputs.req;
-    const res = inputs.res;
 
-    if (req.header('authorization')) {
+    if (req.header && req.header('authorization')) {
       const token = req.header(authorization).split('Bearer ')[1];
 
       if (token) return exits.invalid();
