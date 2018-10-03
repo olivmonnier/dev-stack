@@ -389,6 +389,10 @@ module.exports = {
     // ```
     //--------------------------------------------------------------------------
 
+    // Cloudinary API
+    cloudinaryCloudName: '',
+    cloudinaryApiKey: '',
+    cloudinaryApiSecret: ''
   },
 
 
