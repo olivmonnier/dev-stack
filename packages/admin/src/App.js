@@ -9,8 +9,8 @@ const dataProvider = (process.env.NODE_ENV === 'production')
   ? jsonServerProvider('/api') 
   : fakeDataProvider({
     posts: [
-      { id: 0, title: 'First Article' },
-      { id: 1, title: 'Second Article' }
+      { id: 0, title: 'First Article', resume: 'Short description for First Article', content: 'Long text for first Article' },
+      { id: 1, title: 'Second Article', resume: 'Short description for Second Article', content: 'Long text for Second Article' }
     ]
   });
 const App = () => (
