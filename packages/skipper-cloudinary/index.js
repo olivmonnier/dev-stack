@@ -21,19 +21,20 @@ module.exports = function (globalOpts = {}) {
   });
 
   const adapter = {
-    ls(dirname, cb) {
-      const mergedOptions = Object.assign({}, globalOpts, opts);
-      const c = cloudinary.configure(mergedOptions);
+    ls(opts, cb) {
+      const c = getCloudinary(globalOpts);
+      const o = typeof opts === 'string' 
+        ? { type: 'upload', dirname: opts }
+        : opts;
 
-      c.api.resources(Object.assign({}, { type: 'upload'}, dirname ? { prefix: dirname } : {}), function(err, result) {
+      c.api.resources(o, function(err, result) {
         if (err) return cb(err);
 
         cb(null, result);
       });
     },
     rm(fd, cb) {
-      const mergedOptions = Object.assign({}, globalOpts, opts);
-      const c = cloudinary.configure(mergedOptions);
+      const c = getCloudinary(globalOpts);
 
       c.uploader.destroy(fd, { invalidate: true }, function(err, result) {
         if (err) return cb(err);
@@ -42,10 +43,9 @@ module.exports = function (globalOpts = {}) {
       });
     },
     read(fd, cb) {
-      const mergedOptions = Object.assign({}, globalOpts, opts);
-      const c = cloudinary.configure(mergedOptions);
+      const c = getCloudinary(globalOpts);
 
-      c.api.resources_by_ids([fd], function(err, result) {
+      c.api.resource(fd, function(err, result) {
         if (err) return cb(err);
 
         cb(null, result)
@@ -53,14 +53,16 @@ module.exports = function (globalOpts = {}) {
     },
     receive(opts) {
       const mergedOptions = Object.assign({}, globalOpts, opts);
-      const c = cloudinary.configure(mergedOptions);
+      const c = getCloudinary(mergedOptions);
       const receiver__ = Writable({
         objectMode: true
       });
 
       receiver__._write = function onFile(file, encoding, done) {
-        const stream = c.uploader.upload_stream({}, (err, file) => {
+        const stream = c.uploader.upload_stream({}, (err, result) => {
           if (err) return receiver__.emit('error', new Error(err.message));
+
+          file.extra = result;
 
           done();
         });
@@ -77,4 +79,10 @@ module.exports = function (globalOpts = {}) {
   }
 
   return adapter;
+}
+
+function getCloudinary(opts) {
+  cloudinary.config(opts);
+
+  return cloudinary;
 }
