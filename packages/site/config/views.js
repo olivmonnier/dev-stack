@@ -37,12 +37,11 @@ module.exports.views = {
   ***************************************************************************/
 
   // layout: 'layouts/layout',
+  layout: false,
 
   getRenderFn: function() {
-    const nunjucks = require('nunjucks');
+    const cons = require('consolidate');  
 
-    nunjucks.configure()
-
-    return nunjucks.render;
+    return cons.nunjucks;
   }
 };
