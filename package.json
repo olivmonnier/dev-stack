@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "lerna run build"
+    "build": "lerna run build",
+    "start": "cd ./packages/site && npm start",
+    "admin:dev": "cd ./packages/admin && npm start",
+    "site:dev": "cd ./packages/site && npm run dev"
   },
   "author": "",
   "license": "ISC",

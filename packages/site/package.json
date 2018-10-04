@@ -11,6 +11,7 @@
     "async": "2.0.1",
     "bcryptjs": "^2.4.3",
     "consolidate": "^0.15.1",
+    "cross-env": "^5.2.0",
     "grunt": "1.0.1",
     "jsonwebtoken": "^8.3.0",
     "machinepack-emailaddresses": "^0.4.0",
@@ -29,10 +30,11 @@
     "sails-hook-autoreload": "^1.1.0"
   },
   "scripts": {
-    "start": "NODE_ENV=production node app.js",
+    "start": "cross-env NODE_ENV=production node app.js",
     "test": "npm run lint && npm run custom-tests && echo 'Done.'",
     "lint": "eslint . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
-    "custom-tests": "echo \"(No other custom tests yet.)\" && echo"
+    "custom-tests": "echo \"(No other custom tests yet.)\" && echo",
+    "dev": "sails lift"
   },
   "main": "app.js",
   "repository": {
