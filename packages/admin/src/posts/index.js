@@ -2,12 +2,6 @@ import React from 'react';
 import { List, Edit, Create, Datagrid, TextField, EditButton, DisabledInput, SimpleForm, TextInput } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
 
-import AutoSuggestInput from 'ra-input-autosuggest';
-const choices = [
-  { id: 123, name: 'Leo Tolstoi' },
-  { id: 456, name: 'Jane Austen' },
-];
-
 const PostTitle = ({ record }) => {
   return <span>Post {record ? `"${record.title}"` : ''}</span>;
 };
@@ -39,7 +33,6 @@ export const PostCreate = (props) => (
       <TextInput source="title" />
       <RichTextInput source="resume" />
       <RichTextInput source="content" />
-      <AutoSuggestInput source="test" choices={choices} />
     </SimpleForm>
   </Create>
 );
