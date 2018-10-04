@@ -4,7 +4,6 @@
   "description": "",
   "main": "lib/index.js",
   "module": "esm/index.js",
-  "sideEffects": false,
   "scripts": {
     "build": "rimraf ./lib && cross-env NODE_ENV=production babel ./src -d ./lib --ignore spec.js,test.js",
     "watch": "rimraf ./lib && cross-env NODE_ENV=production babel --watch ./src -d ./lib --ignore spec.js,test.js"
@@ -12,14 +11,16 @@
   "author": "olivmonnier",
   "license": "ISC",
   "peerDependencies": {
-    "@material-ui/core": "3.1.2",
-    "react": "~16.0.0 || ~16.1.0 || ~16.2.0 || ~16.3.0",
-    "react-admin": "^2.0.0",
+    "prop-types": "^15.6.2",
+    "ra-core": "^2.3.3",
+    "react": "~16.0.0 || ~16.1.0 || ~16.2.0 || ~16.3.0 || ~16.4.0",
     "react-dom": "~16.0.0 || ~16.1.0 || ~16.2.0 || ~16.3.0"
   },
   "dependencies": {
-    "prop-types": "^15.6.2",
-    "react-select": "^2.1.0"
+    "@material-ui/core": "^3.1.2",
+    "ra-ui-materialui": "^2.3.3",
+    "react-select": "^2.1.0",
+    "recompose": "^0.30.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -29,6 +30,10 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "cross-env": "^5.2.0",
+    "prop-types": "^15.6.2",
+    "ra-core": "^2.3.3",
+    "react": "^16.5.2",
+    "react-dom": " ~16.3.0",
     "rimraf": "^2.6.2"
   }
 }

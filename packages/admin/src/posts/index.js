@@ -4,8 +4,8 @@ import RichTextInput from 'ra-input-rich-text';
 
 import AutoSuggestInput from 'ra-input-autosuggest';
 const choices = [
-  { _id: 123, full_name: 'Leo Tolstoi', sex: 'M' },
-  { _id: 456, full_name: 'Jane Austen', sex: 'F' },
+  { value: 123, label: 'Leo Tolstoi' },
+  { value: 456, label: 'Jane Austen' },
 ];
 
 const PostTitle = ({ record }) => {
@@ -39,7 +39,7 @@ export const PostCreate = (props) => (
       <TextInput source="title" />
       <RichTextInput source="resume" />
       <RichTextInput source="content" />
-      <AutoSuggestInput source="test" choices={choices} optionText="full_name" optionValue="_id"/>
+      <AutoSuggestInput source="test" choices={choices} />
     </SimpleForm>
   </Create>
 );
