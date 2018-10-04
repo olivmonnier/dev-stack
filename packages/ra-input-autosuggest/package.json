@@ -13,13 +13,13 @@
   "peerDependencies": {
     "prop-types": "^15.6.2",
     "ra-core": "^2.3.3",
-    "react": "~16.0.0 || ~16.1.0 || ~16.2.0 || ~16.3.0 || ~16.4.0",
-    "react-dom": "~16.0.0 || ~16.1.0 || ~16.2.0 || ~16.3.0"
+    "react": "16.5.2",
+    "react-dom": "16.5.2"
   },
   "dependencies": {
     "@material-ui/core": "^3.1.2",
     "ra-ui-materialui": "^2.3.3",
-    "react-select": "^2.1.0",
+    "react-select": "2.0.0",
     "recompose": "^0.30.0"
   },
   "devDependencies": {

@@ -4,8 +4,8 @@ import RichTextInput from 'ra-input-rich-text';
 
 import AutoSuggestInput from 'ra-input-autosuggest';
 const choices = [
-  { value: 123, label: 'Leo Tolstoi' },
-  { value: 456, label: 'Jane Austen' },
+  { id: 123, name: 'Leo Tolstoi' },
+  { id: 456, name: 'Jane Austen' },
 ];
 
 const PostTitle = ({ record }) => {

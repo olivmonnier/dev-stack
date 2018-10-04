@@ -214,14 +214,14 @@ var AutoSuggestInput = function (_React$Component) {
   _createClass(AutoSuggestInput, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      // const selectedItem = this.getSelectedItem();
+      var selectedItem = this.getSelectedItem();
 
-      // if (selectedItem) {
-      //   this.setState({
-      //     inputValue: selectedItem.name,
-      //     selectedOption: this.getSuggestionText(selectedItem)
-      //   })
-      // }
+      if (selectedItem) {
+        this.setState({
+          inputValue: selectedItem.name,
+          selectedOption: this.getSuggestionText(selectedItem)
+        });
+      }
     }
   }, {
     key: 'getSelectedItem',
@@ -230,24 +230,29 @@ var AutoSuggestInput = function (_React$Component) {
           input = _props.input,
           choices = _props.choices;
 
-      // return (input && input.value) ?
-      //   choices.find(c => c.id === input.value) : 
-      //   null;
+
+      return input && input.value ? choices.find(function (c) {
+        return c.id === input.value;
+      }) : null;
     }
   }, {
     key: 'handleChange',
     value: function handleChange(selectedOption) {
-      // const { input } = this.props
-      // this.setState({ selectedOption }, () => input && input.onChange && input.onChange(selectedOption['value']));
+      var input = this.props.input;
+
+      this.setState({ selectedOption: selectedOption }, function () {
+        return input && input.onChange && input.onChange(selectedOption['value']);
+      });
     }
   }, {
     key: 'handleInputChange',
     value: function handleInputChange(inputValue) {
-      // const { setFilter } = this.props;
-      // if (setFilter) {
-      //   setFilter(inputValue);
-      // } 
-      // this.setState({ inputValue });
+      var setFilter = this.props.setFilter;
+
+      if (setFilter) {
+        setFilter(inputValue);
+      }
+      this.setState({ inputValue: inputValue });
     }
   }, {
     key: 'getSuggestionText',
