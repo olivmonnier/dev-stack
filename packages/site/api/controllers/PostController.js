@@ -20,10 +20,11 @@ module.exports = {
   upload: function  (req, res) {
     req.file('avatar').upload({
       adapter: require('skipper-dropbox'),
-      accessToken: ''
+      accessToken: 'on_uhKWVfXAAAAAAAAAAbqM9E0rpfrRLQtcjetJnVBCsf1BUJH64fihRIl8XzHp4'
     }, function (err, files) {
-      if (err)
+      if (err) {
         return res.serverError(err);
+      }
 
       return res.json({
         message: files.length + ' file(s) uploaded successfully!',

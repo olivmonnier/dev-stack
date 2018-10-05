@@ -40,7 +40,22 @@ module.exports = function (globalOpts = {}) {
       receiver__._write = function onFile(file, encoding, done) {
         const stream = UploadStream();
 
-        file.pipe(stream)
+        stream.on('error', function(error) {
+          receiver__.emit('error', new Error(error.message));
+        });
+
+        stream.on('finish', function(err, result) {
+          dropbox.filesUpload({ path: '/' + file.filename, contents: Buffer(this.buffer, 'binary') })
+            .then(fileUploaded => {
+              file.extra = { 
+                id: fileUploaded.id 
+              };
+              done();
+            })
+            .catch(err => done(err.error));
+        });
+
+        file.pipe(stream);
       }
 
       return receiver__;
