@@ -24,8 +24,12 @@ module.exports = function (globalOpts = {}) {
     ls() {
 
     },
-    rm() {
+    rm(fd, cb) {
+      const dropbox = getDropbox(globalOpts);
 
+      dropbox.filesDeleteV2({ path: fd })
+        .then(() => cb())
+        .catch(err => cb(err.error));
     },
     read() {
 
