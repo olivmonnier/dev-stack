@@ -1,14 +1,25 @@
 import React from 'react';
-import { Admin, Resource } from 'react-admin';
+import { Admin, Resource, fetchUtils } from 'react-admin';
 import jsonServerProvider from 'ra-data-json-sails';
 import fakeDataProvider from 'ra-data-fakerest';
+import authProvider from './authProvider';
 
 import CustomLayout from './Layout';
 
 import { PostList, PostEdit, PostCreate } from './posts';
 
+const httpClient = (url, options = {}) => {
+  if (!options.headers) {
+    options.headers = new Headers({ Accept: 'application/json' });
+  }
+  const token = localStorage.getItem('token');
+  options.headers.set('Authorization', `Bearer ${token}`);
+
+  return fetchUtils.fetchJson(url, options);
+}
+
 const dataProvider = (process.env.NODE_ENV === 'production') 
-  ? jsonServerProvider('/api') 
+  ? jsonServerProvider('/api', httpClient) 
   : fakeDataProvider({
     posts: [
       { id: 0, title: 'First Article', resume: 'Short description for First Article', content: 'Long text for first Article' },
@@ -19,7 +30,7 @@ const dataProvider = (process.env.NODE_ENV === 'production')
     ]
   });
 const App = () => (
-  <Admin appLayout={CustomLayout}  dataProvider={ dataProvider } >
+  <Admin appLayout={CustomLayout} dataProvider={ dataProvider } authProvider={ (process.env.NODE_ENV === 'production') ? authProvider : null } >
     <Resource name="posts" list={ PostList } edit={ PostEdit } create={ PostCreate } />
   </Admin>
 );
