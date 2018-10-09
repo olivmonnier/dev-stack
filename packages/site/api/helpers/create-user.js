@@ -5,7 +5,7 @@ module.exports = {
   description: 'Create a new user.',
 
   inputs: {
-    email: {
+    username: {
       type: 'string'
     },
     password: {
@@ -27,7 +27,7 @@ module.exports = {
   fn: async function(inputs, exists) {
     let attr = {
       id: sails.helpers.randomCryptoString({ size: 32 }).execSync(),
-      email: inputs.email.toLowerCase()
+      username: inputs.username.toLowerCase()
     }
 
     if (inputs.password) {

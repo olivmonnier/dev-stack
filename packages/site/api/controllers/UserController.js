@@ -6,7 +6,7 @@ module.exports = {
   // patch /api/users/login
 	login: async function(req, res) {
 		const user = await User.findOne({
-			email: req.param('email')
+			username: req.param('username')
 		});
 
 		if (!user) return res.notFound();
@@ -32,7 +32,7 @@ module.exports = {
 
 	// post /api/users/register
 	register: function(req, res) {
-		if (_.isUndefined(req.param('email'))) {
+		if (_.isUndefined(req.param('username'))) {
 			return res.badRequest('An email address is required.')
 		}
 
@@ -45,7 +45,7 @@ module.exports = {
 		}
 
 		Emailaddresses.validate({
-			string: req.param('email'),
+			string: req.param('username'),
 		}).exec({
 			error: function(err) {
 				return res.serverError(err)
@@ -55,7 +55,7 @@ module.exports = {
 			},
 			success: async function() {
 				const user = await sails.helpers.createUser({
-					email: req.param('email'),
+					username: req.param('username'),
 					password: req.param('password'),
 				})
 
