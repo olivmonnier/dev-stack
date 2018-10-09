@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const Emailaddresses = require('machinepack-emailaddresses');
 
 module.exports = {
-  // patch /api/users/login
+  // post /api/users/login
 	login: async function(req, res) {
 		const user = await User.findOne({
 			username: req.param('username')
@@ -23,7 +23,7 @@ module.exports = {
 		return res.ok(token)
 	},
 
-	// patch /api/users/logout
+	// post /api/users/logout
 	logout: function(req, res) {
 		req.user = null;
 

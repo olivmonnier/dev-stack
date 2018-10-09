@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "del:site:admin": "rimraf ./packages/site/admin",
+    "copy:admin": "copy-cli ./packages/admin/build/**/* ./packages/site/admin",
+    "prebuild": "npm run del:site:admin",
     "build": "lerna run build",
+    "postbuild": "npm run copy:admin",
     "start": "cd ./packages/site && npm start",
     "admin:dev": "cd ./packages/admin && npm start",
     "site:dev": "cd ./packages/site && npm run dev"
@@ -14,7 +18,9 @@
   "workspaces": [
     "packages/*"
   ],
-  "devDependencies": {
-    "lerna": "^3.4.0"
+  "dependencies": {
+    "copy": "^0.3.2",
+    "lerna": "^3.4.0",
+    "rimraf": "^2.6.2"
   }
 }
