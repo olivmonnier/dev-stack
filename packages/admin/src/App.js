@@ -7,6 +7,7 @@ import frenchMessages from './i18n/fr';
 import authProvider from './authProvider';
 
 import CustomLayout from './Layout';
+import CustomMenu from './Menu';
 
 import { PostList, PostEdit, PostCreate } from './posts';
 
@@ -40,7 +41,7 @@ const messages = {
 const i18nProvider = locale => messages[locale];
 
 const App = () => (
-  <Admin locale="fr" i18nProvider={i18nProvider} appLayout={CustomLayout} dataProvider={ dataProvider } authProvider={ (process.env.NODE_ENV === 'production') ? authProvider : null } >
+  <Admin locale="fr" i18nProvider={i18nProvider} appLayout={CustomLayout} menu={CustomMenu} dataProvider={ dataProvider } authProvider={ (process.env.NODE_ENV === 'production') ? authProvider : null } >
     <Resource name="posts" list={ PostList } edit={ PostEdit } create={ PostCreate } />
   </Admin>
 );

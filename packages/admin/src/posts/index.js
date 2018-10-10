@@ -3,7 +3,7 @@ import { List, Edit, Create, Datagrid, TextField, EditButton, DisabledInput, Sim
 import RichTextInput from 'ra-input-rich-text';
 
 const PostTitle = ({ record }) => {
-  return <span>Post {record ? `"${record.title}"` : ''}</span>;
+  return <span>{record ? `${record.title}` : ''}</span>;
 };
 
 export const PostList = (props) => (
