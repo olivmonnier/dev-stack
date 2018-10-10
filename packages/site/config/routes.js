@@ -49,6 +49,9 @@ module.exports.routes = {
   'post /logout': 'UserController.logout',
   'post /api/users/register': 'UserController.register',
 
+  // File
+  'post /file/upload': 'FileController.upload',
+
   // Posts
   'get /api/posts': 'PostController.getAll'
 

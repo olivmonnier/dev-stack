@@ -11,26 +11,17 @@ module.exports = {
 
     res.writeHead(200, {'content-type': 'text/html'});
     res.end(
-    '<form action="http://localhost:1337/post/upload" enctype="multipart/form-data" method="post">'+
+    '<form action="http://localhost:1337/file/upload" enctype="multipart/form-data" method="post">'+
     '<input type="file" name="avatar" multiple="multiple"><br>'+
     '<input type="submit" value="Upload">'+
     '</form>'
     )
   },
-  upload: function  (req, res) {
-    req.file('avatar').upload({
-      adapter: require('skipper-dropbox'),
-      accessToken: 'on_uhKWVfXAAAAAAAAAAbqM9E0rpfrRLQtcjetJnVBCsf1BUJH64fihRIl8XzHp4'
-    }, function (err, files) {
-      if (err) {
-        return res.serverError(err);
-      }
-
-      return res.json({
-        message: files.length + ' file(s) uploaded successfully!',
-        files: files
-      });
-    });
+  upload: async function  (req, res) {
+    await sails.helpers.uploadDropbox(
+      req, 'avatar'
+    );
+    return res.send('ok')
   }
 };
 

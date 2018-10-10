@@ -17,23 +17,39 @@ const UploadStream = require('./UploadStream');
 
 module.exports = function (globalOpts = {}) {
   _.defaults(globalOpts, {
-    accessToken: ''
+    accessToken: '',
+    pathFolder: '',
+    limit: 10
   });
 
   const adapter = {
     ls() {
-
-    },
-    rm(fd, cb) {
+      const { pathFolder, limit } = globalOpts;
       const dropbox = getDropbox(globalOpts);
 
-      dropbox.filesDeleteV2({ path: fd })
+      dropbox.filesListFolder({ path: pathFolder, limit })
         .then(() => cb())
         .catch(err => cb(err.error));
     },
-    read() {
 
+    rm(fd, cb) {
+      const { pathFolder } = globalOpts;
+      const dropbox = getDropbox(globalOpts);
+
+      dropbox.filesDeleteV2({ path: pathFolder + '/' + fd })
+        .then(() => cb())
+        .catch(err => cb(err.error));
     },
+
+    read(fd, cb) {
+      const { pathFolder } = globalOpts;
+      const dropbox = getDropbox(globalOpts);
+
+      dropbox.filesGetMetadata({ path: pathFolder + '/' + fd })
+        .then(() => cb())
+        .catch(err => cb(err.error));
+    },
+
     receive(opts) {
       const mergedOptions = Object.assign({}, globalOpts, opts);
       const dropbox = getDropbox(mergedOptions);
@@ -49,7 +65,7 @@ module.exports = function (globalOpts = {}) {
         });
 
         stream.on('finish', function(err, result) {
-          dropbox.filesUpload({ path: '/' + file.filename, contents: Buffer(this.buffer, 'binary') })
+          dropbox.filesUpload({ path: mergedOptions.pathFolder + '/' + file.filename, contents: Buffer(this.buffer, 'binary') })
             .then(fileUploaded => {
               file.extra = { 
                 id: fileUploaded.id 

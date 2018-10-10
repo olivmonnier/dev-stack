@@ -392,9 +392,13 @@ module.exports = {
     // Cloudinary API
     cloudinaryCloudName: '',
     cloudinaryApiKey: '',
-    cloudinaryApiSecret: ''
+    cloudinaryApiSecret: '',
+
+    // Dropbox API
+    dropboxAccessToken: ''
   },
 
 
   jwtExpires: 3600,
+  jwtSecret: 'secret phrase'
 };
