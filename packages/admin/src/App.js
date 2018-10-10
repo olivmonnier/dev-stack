@@ -2,6 +2,8 @@ import React from 'react';
 import { Admin, Resource, fetchUtils } from 'react-admin';
 import jsonServerProvider from 'ra-data-json-sails';
 import fakeDataProvider from 'ra-data-fakerest';
+import englishMessages from './i18n/en';
+import frenchMessages from './i18n/fr';
 import authProvider from './authProvider';
 
 import CustomLayout from './Layout';
@@ -29,8 +31,16 @@ const dataProvider = (process.env.NODE_ENV === 'production')
       { id: 0, username: 'admin', password: 'admin' }
     ]
   });
+
+const messages = {
+  fr: frenchMessages,
+  en: englishMessages
+};
+
+const i18nProvider = locale => messages[locale];
+
 const App = () => (
-  <Admin appLayout={CustomLayout} dataProvider={ dataProvider } authProvider={ (process.env.NODE_ENV === 'production') ? authProvider : null } >
+  <Admin locale="fr" i18nProvider={i18nProvider} appLayout={CustomLayout} dataProvider={ dataProvider } authProvider={ (process.env.NODE_ENV === 'production') ? authProvider : null } >
     <Resource name="posts" list={ PostList } edit={ PostEdit } create={ PostCreate } />
   </Admin>
 );
