@@ -33,6 +33,9 @@ module.exports.security = {
   //   allowOrigins: '*',
   //   allowCredentials: false,
   // },
+  cors: {
+    allowResponseHeaders: 'Access-Control-Expose-Headers'
+  }
 
 
   /****************************************************************************

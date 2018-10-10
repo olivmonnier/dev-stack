@@ -6,31 +6,18 @@
  */
 
 module.exports = {
-  
-  index: function (req,res){
+  getAll: async function(req, res) {
+    const params = req.allParams();
+    const paramsCount = req.allParams();
 
-    res.writeHead(200, {'content-type': 'text/html'});
-    res.end(
-    '<form action="http://localhost:1337/post/upload" enctype="multipart/form-data" method="post">'+
-    '<input type="file" name="avatar" multiple="multiple"><br>'+
-    '<input type="submit" value="Upload">'+
-    '</form>'
-    )
-  },
-  upload: function  (req, res) {
-    req.file('avatar').upload({
-      adapter: require('skipper-dropbox'),
-      accessToken: 'on_uhKWVfXAAAAAAAAAAbqM9E0rpfrRLQtcjetJnVBCsf1BUJH64fihRIl8XzHp4'
-    }, function (err, files) {
-      if (err) {
-        return res.serverError(err);
-      }
+    delete paramsCount.skip;
+    delete paramsCount.sort;
+    delete paramsCount.limit;
 
-      return res.json({
-        message: files.length + ' file(s) uploaded successfully!',
-        files: files
-      });
-    });
+    const posts = await Post.find(params);
+    const total = await Post.count(paramsCount);
+
+    return res.set('X-Total-Count', total).json(posts)
   }
 };
 

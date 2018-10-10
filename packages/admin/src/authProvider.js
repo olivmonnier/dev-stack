@@ -19,15 +19,16 @@ export default (type, params) => {
         if (response.status < 200 || response.status >= 300) {
           throw new Error(response.statusText);
         }
+
         return response.json();
       })
-      .then(({ token }) => {
-        localStorage.setItem('token', token);
+      .then(token => {
+        localStorage.setItem('jwtToken', token);
       });
   }
 
   if (type === AUTH_LOGOUT) {
-    localStorage.removeItem('token');
+    localStorage.removeItem('jwtToken');
 
     return Promise.resolve();
   }
@@ -35,14 +36,14 @@ export default (type, params) => {
   if (type === AUTH_ERROR) {
     const status  = params.status;
     if (status === 401 || status === 403) {
-      localStorage.removeItem('token');
+      localStorage.removeItem('jwtToken');
       return Promise.reject();
     }
     return Promise.resolve();
   }
   
   if (type === AUTH_CHECK) {
-    return localStorage.getItem('token') ? Promise.resolve() : Promise.reject();
+    return localStorage.getItem('jwtToken') ? Promise.resolve() : Promise.reject();
   }
   
   return Promise.reject('Unkown method');
