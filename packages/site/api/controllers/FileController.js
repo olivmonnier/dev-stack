@@ -28,9 +28,6 @@ module.exports = {
   
     console.log('files', files);
 
-    const f = await fileAdapter.read(files[0].filename);
-    console.log('file', f);
-
     const list = await fileAdapter.ls();
     console.log('list', list)
 

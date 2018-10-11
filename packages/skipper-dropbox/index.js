@@ -18,45 +18,59 @@ const UploadStream = require('./UploadStream');
 module.exports = function (globalOpts = {}) {
   _.defaults(globalOpts, {
     accessToken: '',
-    pathFolder: '',
-    limit: 10
+    pathFolder: ''
   });
 
   const adapter = {
     /**
      * List files in dropbox folder
-     * 
+     * @param {string} path
      * @returns {Promise}
      */
-    ls() {
-      const { pathFolder, limit } = globalOpts;
+    ls(opts = {}) {
       const dropbox = getDropbox(globalOpts);
+      const params = Object.assign({ path: '' }, opts);
 
-      return dropbox.filesListFolder({ path: pathFolder, limit });
+      return dropbox.filesListFolder(params);
     },
     /**
      * Delete file in dropbox folder
      * 
-     * @param {string} filename
+     * @param {string} path
      * @returns {Promise}
      */
-    rm(filename) {
+    rm(path) {
       const { pathFolder } = globalOpts;
       const dropbox = getDropbox(globalOpts);
+      const filePath = (path[0] === '/') ? path.substr(1) : path;
 
-      return dropbox.filesDeleteV2({ path: pathFolder + '/' + filename });
+      return dropbox.filesDeleteV2({ path: pathFolder + '/' + filePath });
     },
+    
+    /**
+     * Download a file
+     * @param {string} path
+     * @returns {Promise} 
+     */
+    download(path) {
+      const pathFolder = globalOpts;
+      const dropbox = getDropbox(globalOpts);
+      const filePath = (path[0] === '/') ? path.substr(1) : path;
+
+      return dropbox.filesDownload({ path: pathFolder + '/' + filePath });
+    },
+
     /**
      * Metadata of file stored on dropbox
-     * @param {string} filename 
+     * @param {string} id 
      * @returns {Promise}
      */
-    read(filename) {
-      const { pathFolder } = globalOpts;
+    find(id) {
       const dropbox = getDropbox(globalOpts);
 
-      return dropbox.filesGetMetadata({ path: pathFolder + '/' + filename });
+      return dropbox.filesGetMetadata({ path: id })
     },
+
     /**
      * Upload files on dropbox
      * @param {object} opts 
