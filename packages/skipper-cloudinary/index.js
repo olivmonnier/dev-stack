@@ -21,7 +21,7 @@ module.exports = function (globalOpts = {}) {
   });
 
   const adapter = {
-    ls(opts, cb) {
+    ls(opts, cb = function() {}) {
       const c = getCloudinary(globalOpts);
       const o = typeof opts === 'string' 
         ? { type: 'upload', dirname: opts }
@@ -33,7 +33,7 @@ module.exports = function (globalOpts = {}) {
         cb(null, result);
       });
     },
-    rm(fd, cb) {
+    rm(fd, cb = function() {}) {
       const c = getCloudinary(globalOpts);
 
       c.uploader.destroy(fd, { invalidate: true }, function(err, result) {
@@ -42,7 +42,7 @@ module.exports = function (globalOpts = {}) {
         return cb();
       });
     },
-    read(fd, cb) {
+    read(fd, cb = function() {}) {
       const c = getCloudinary(globalOpts);
 
       c.api.resource(fd, function(err, result) {

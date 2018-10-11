@@ -18,9 +18,25 @@ module.exports = {
     )
   },
   upload: async function  (req, res) {
-    await sails.helpers.uploadDropbox(
+    const skipperDropbox = require('skipper-dropbox');
+    const fileAdapter = skipperDropbox({
+      accessToken: sails.config.custom.dropboxAccessToken
+    });
+    const files = await sails.helpers.uploadDropbox(
       req, 'avatar'
     );
+  
+    console.log('files', files);
+
+    const f = await fileAdapter.read(files[0].filename);
+    console.log('file', f);
+
+    const list = await fileAdapter.ls();
+    console.log('list', list)
+
+    const result = await fileAdapter.rm(files[0].filename);
+    console.log('result', result);
+
     return res.send('ok')
   }
 };

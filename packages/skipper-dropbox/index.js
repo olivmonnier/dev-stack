@@ -12,7 +12,7 @@ const UploadStream = require('./UploadStream');
  * skipper-dropbox
  * 
  * @param {Object} globalOpts
- * @return {Object}
+ * @returns {Object}
  */
 
 module.exports = function (globalOpts = {}) {
@@ -23,33 +23,45 @@ module.exports = function (globalOpts = {}) {
   });
 
   const adapter = {
+    /**
+     * List files in dropbox folder
+     * 
+     * @returns {Promise}
+     */
     ls() {
       const { pathFolder, limit } = globalOpts;
       const dropbox = getDropbox(globalOpts);
 
-      dropbox.filesListFolder({ path: pathFolder, limit })
-        .then(() => cb())
-        .catch(err => cb(err.error));
+      return dropbox.filesListFolder({ path: pathFolder, limit });
     },
-
-    rm(fd, cb) {
+    /**
+     * Delete file in dropbox folder
+     * 
+     * @param {string} filename
+     * @returns {Promise}
+     */
+    rm(filename) {
       const { pathFolder } = globalOpts;
       const dropbox = getDropbox(globalOpts);
 
-      dropbox.filesDeleteV2({ path: pathFolder + '/' + fd })
-        .then(() => cb())
-        .catch(err => cb(err.error));
+      return dropbox.filesDeleteV2({ path: pathFolder + '/' + filename });
     },
-
-    read(fd, cb) {
+    /**
+     * Metadata of file stored on dropbox
+     * @param {string} filename 
+     * @returns {Promise}
+     */
+    read(filename) {
       const { pathFolder } = globalOpts;
       const dropbox = getDropbox(globalOpts);
 
-      dropbox.filesGetMetadata({ path: pathFolder + '/' + fd })
-        .then(() => cb())
-        .catch(err => cb(err.error));
+      return dropbox.filesGetMetadata({ path: pathFolder + '/' + filename });
     },
-
+    /**
+     * Upload files on dropbox
+     * @param {object} opts 
+     * @returns {stream}
+     */
     receive(opts) {
       const mergedOptions = Object.assign({}, globalOpts, opts);
       const dropbox = getDropbox(mergedOptions);
