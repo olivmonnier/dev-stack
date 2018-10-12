@@ -36,11 +36,11 @@ module.exports = function (globalOpts = {}) {
       })
     },
 
-    rm(fd) {
+    rm(publicId) {
       const c = getCloudinary(globalOpts);
 
       return new Promise((resolve, reject) => {
-        c.uploader.destroy(fd, { invalidate: true }, function(err, result) {
+        c.uploader.destroy(publicId, { invalidate: true }, function(err, result) {
           if (err) return reject(err);
   
           resolve(result);
