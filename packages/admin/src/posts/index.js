@@ -1,13 +1,19 @@
 import React from 'react';
-import { List, Edit, Create, Datagrid, TextField, EditButton, DisabledInput, SimpleForm, TextInput } from 'react-admin';
+import { Filter, List, Edit, Create, Datagrid, TextField, EditButton, DisabledInput, SimpleForm, TextInput, ReferenceInput, SelectInput } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
 
 const PostTitle = ({ record }) => {
   return <span>{record ? `${record.title}` : ''}</span>;
 };
 
+const PostFilter = (props) => (
+  <Filter {...props}>
+    <TextInput label="Search" source="q" alwaysOn />
+  </Filter>
+)
+
 export const PostList = (props) => (
-  <List {...props}>
+  <List {...props} filters={<PostFilter />}>
     <Datagrid>
       <TextField source="id" />
       <TextField source="title" />
