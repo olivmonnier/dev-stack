@@ -26,5 +26,5 @@ module.exports.custom = {
   cloudinaryApiSecret: '',
 
   // Dropbox API
-  dropboxAccessToken: 'on_uhKWVfXAAAAAAAAAAbqM9E0rpfrRLQtcjetJnVBCsf1BUJH64fihRIl8XzHp4'
+  dropboxAccessToken: ''
 };

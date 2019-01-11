@@ -24,9 +24,8 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'pages/homepage'
-  },
+  'GET /': { view: 'pages/homepage' },
+  'GET /lang/:lang': 'LangController.get',
 
   /***************************************************************************
   *                                                                          *
@@ -45,16 +44,13 @@ module.exports.routes = {
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
   
   // Authentification
-  'post /login': 'UserController.login',
-  'post /logout': 'UserController.logout',
-  'post /api/users/register': 'UserController.register',
+  'POST /login': 'UserController.login',
+  'POST /logout': 'UserController.logout',
+  'POST /api/users/register': 'UserController.register',
 
   // File
-  'post /file/upload': 'FileController.upload',
-
-  // Posts
-  'get /api/posts': 'PostController.getAll'
-
+  'POST /api/files/cloudinary': 'FileController.cloudinaryUpload',
+  'POST /api/files/dropbox': 'FileController.dropboxUpload',
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

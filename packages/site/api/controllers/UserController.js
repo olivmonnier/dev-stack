@@ -11,7 +11,11 @@ module.exports = {
 
 		if (!user) return res.notFound();
 
-		await bcrypt.compare(req.param('password'), user.password);
+		const correctPassword = await bcrypt.compare(req.param('password'), user.password);
+	
+		if (process.env.NODE_ENV === 'production') {
+			if (!correctPassword) return res.badRequest('Wrong password');
+		}
 
 		const token = jwt.sign({ user: user.id }, sails.config.jwtSecret, { expiresIn: sails.config.jwtExpires });
 
@@ -54,9 +58,9 @@ module.exports = {
 				return res.badRequest('Doesn\'t look like an email address.')
 			},
 			success: async function() {
-				const user = await sails.helpers.createUser({
+				const user = await sails.helpers.createUser.with({
 					username: req.param('username'),
-					password: req.param('password'),
+					password: req.param('password')
 				})
 
 				const token = jwt.sign({ user: user.id }, sails.config.jwtSecret, { expiresIn: sails.config.jwtExpires })
@@ -69,4 +73,42 @@ module.exports = {
 			}
 		})
 	},
+
+	get: async function(req, res) {
+		const id = req.param('id');
+		const user = await User.findOne({ id });
+
+		return res.json(user);
+	},
+	getAll: async function(req, res) {
+		const { resources, total } = await sails.helpers.getAll(req, User);
+
+    return res.set('X-Total-Count', total).json(resources);
+	},
+	create: async function (req, res) {
+		const params = req.allParams();
+
+		params.password = await bcrypt.hash(req.param('password'), 10);
+
+		const user = await User.create(params)
+			.fetch();
+
+		res.ok(user);
+	},
+	update: async function(req, res) {
+		const id = req.param('id');
+		const params = req.allParams();
+
+		params.password = await bcrypt.hash(req.param('password'), 10);
+
+		const userUpdated = await User.update({ id }, params).fetch();
+
+		res.ok(userUpdated);
+	},
+	delete: async function(req, res) {
+		const id = req.param('id');
+		const userDestroyed = await User.destroy({ id }).fetch();
+
+		res.ok(userDestroyed);
+	}
 }

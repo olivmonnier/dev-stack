@@ -7,21 +7,18 @@
  * @docs        :: http://sailsjs.org/#!documentation/policies
  *
  */
-const jwt = require('jsonwebtoken');
 
 module.exports = function(req, res, next) {
-  sails.helpers.verifyToken({
-    req, res
-  })
-  .switch({
-    error: function(err) {
-      return res.serverError(err)
-    },
-    invalid: function(err) {
-      return next()
-    },
-    success: function() {
-      return next()
-    }
-  })
+  sails.helpers.verifyToken(req)
+    .switch({
+      error: function(err) {
+        return res.serverError(err)
+      },
+      invalid: function(err) {
+        return next(err)
+      },
+      success: function() {
+        return next()
+      }
+    })
 }

@@ -1,3 +1,17 @@
-body {
-  background: #000;
-}
+// Variables
+// =========
+@import "variables";
+
+// Bootstrap
+// =========
+
+
+// Mixins
+// ======
+
+// Base rules
+// ==========
+@import "bases.scss";
+
+// Components
+// ==========

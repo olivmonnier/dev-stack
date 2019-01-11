@@ -1,4 +1,4 @@
-const skipperDropbox = require('skipper-dropbox');
+const skipperDropbox = require('@dev/skipper-dropbox');
 
 module.exports = {
   friendlyName: 'Upload on Dropbox',

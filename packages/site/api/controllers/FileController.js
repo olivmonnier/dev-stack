@@ -6,35 +6,27 @@
  */
 
 module.exports = {
-  
-  index: function (req,res){
+  cloudinaryUpload: async function  (req, res) {
+    if (req.file('imagesUpload[]')) {
+      const images = await sails.helpers.uploadCloudinary(
+        req, 'imagesUpload[]'
+      );
 
-    res.writeHead(200, {'content-type': 'text/html'});
-    res.end(
-    '<form action="http://localhost:1337/file/upload" enctype="multipart/form-data" method="post">'+
-    '<input type="file" name="avatar" multiple="multiple"><br>'+
-    '<input type="submit" value="Upload">'+
-    '</form>'
-    )
+      return res.json(images);
+    } else {
+      return res.ok()
+    }
   },
-  upload: async function  (req, res) {
-    const skipperDropbox = require('skipper-dropbox');
-    const fileAdapter = skipperDropbox({
-      accessToken: sails.config.custom.dropboxAccessToken
-    });
-    const files = await sails.helpers.uploadDropbox(
-      req, 'avatar'
-    );
-  
-    console.log('files', files);
+  dropboxUpload: async function (req, res) {
+    if (req.file('documentsUpload[]')) {
+      const documents = await sails.helpers.uploadDropbox(
+        req, 'documentsUpload[]'
+      );
 
-    const list = await fileAdapter.ls();
-    console.log('list', list)
-
-    const result = await fileAdapter.rm(files[0].filename);
-    console.log('result', result);
-
-    return res.send('ok')
+      return res.json(documents);
+    } else {
+      return res.ok();
+    }
   }
 };
 

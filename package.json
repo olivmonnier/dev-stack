@@ -6,7 +6,8 @@
   "scripts": {
     "postinstall": "lerna bootstrap",
     "del:site:admin": "rimraf ./packages/site/admin",
-    "copy:admin": "copy-cli ./packages/admin/build/**/* ./packages/site/admin",
+    "copy:admin": "copy ./packages/admin/build/**/* ./packages/site/admin",
+    "copy:admin:win": "copy-cli ./packages/admin/build/**/* ./packages/site/admin",
     "prebuild": "npm run del:site:admin",
     "build": "lerna run build",
     "postbuild": "npm run copy:admin",

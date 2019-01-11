@@ -7,7 +7,7 @@ const _ = require('lodash');
 const cloudinary = require('cloudinary').v2;
 
 /**
- * skipper-cloudinary-v2
+ * skipper-cloudinary
  * 
  * @param {Object} globalOpts
  * @return {Object}

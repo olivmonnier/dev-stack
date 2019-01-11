@@ -25,7 +25,7 @@ module.exports.views = {
   *                                                                          *
   ***************************************************************************/
 
-  extension: 'njk',
+  // extension: 'ejs',
 
   /***************************************************************************
   *                                                                          *
@@ -36,12 +36,5 @@ module.exports.views = {
   *                                                                          *
   ***************************************************************************/
 
-  // layout: 'layouts/layout',
-  layout: false,
-
-  getRenderFn: function() {
-    const cons = require('consolidate');  
-
-    return cons.nunjucks;
-  }
+  layout: 'layouts/layout'
 };

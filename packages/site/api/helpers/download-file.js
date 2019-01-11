@@ -1,35 +1,25 @@
-const skipperDropbox = require('skipper-dropbox');
+const skipperDropbox = require('@dev/skipper-dropbox');
 
 module.exports = {
   friendlyName: 'Download on Dropbox',
   description: 'Download a file on Dropbox.',
 
   inputs: {
-    res: {
-      type: 'ref',
-      friendlyName: 'Response',
-      description: 'A reference to the response object (res).',
-      required: true
-    },
-    path: {
+    id: {
       type: 'string',
-      description: 'File path to delete',
+      description: 'File id to download',
       required: true 
     }
   },
 
-  fn: function(inputs, exits) {
-    const { path, res } = inputs;
+  fn: async function(inputs, exits) {
+    const { id } = inputs;
     const fileAdapter = skipperDropbox({
       accessToken: sails.config.custom.dropboxAccessToken
     });
-
-    fileAdapter.download(path)
-      .then(result => {
-        res.set('Content-Disposition', 'attachment; filename=' + result.name);
-        res.send(new Buffer(result.fileBinary, 'binary'));
-        return exits.success(result);
-      })
-      .catch(err => exits.error(err))
+    const fileMeta = await fileAdapter.find(id);
+    const result = await fileAdapter.download({ path: fileMeta.path_lower })
+    
+    exits.success(result);
   }
 }

@@ -4,15 +4,24 @@ import { MenuItemLink, Responsive, getResources, translate } from 'react-admin';
 import compose from 'recompose/compose';
 import { withRouter } from 'react-router-dom';
 
-const Menu = ({ resources, onMenuClick, logout, translate }) => (
+import PostsIcon from '@material-ui/icons/Description';
+import UsersIcon from '@material-ui/icons/AccountCircle';
+
+const items = [
+  { name: 'posts', icon: <PostsIcon /> },
+  { name: 'users', icon: <UsersIcon /> },
+];
+
+const Menu = ({ onMenuClick, logout, translate }) => (
   <div>
-    {resources.map(resource => (
+    {items.map(item => (
       <MenuItemLink 
-        key={resource.name}
-        to={`/${resource.name}`} 
-        primaryText={translate(`resources.${resource.name}.name`, {
+        key={item.name}
+        to={`/${item.name}`} 
+        primaryText={translate(`resources.${item.name}.name`, {
           smart_count: 2
         })} 
+        leftIcon={ item.icon }
         onClick={onMenuClick} 
       />
     ))}

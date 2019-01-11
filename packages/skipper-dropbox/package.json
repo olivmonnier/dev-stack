@@ -1,5 +1,5 @@
 {
-  "name": "skipper-dropbox",
+  "name": "@dev/skipper-dropbox",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

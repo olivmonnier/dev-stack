@@ -1,4 +1,4 @@
-const skipperCloudinary = require('skipper-cloudinary-v2');
+const skipperCloudinary = require('@dev/skipper-cloudinary');
 
 module.exports = {
   friendlyName: 'Upload on Cloudinary',
