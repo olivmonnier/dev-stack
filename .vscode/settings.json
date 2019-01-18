@@ -1,4 +1,7 @@
 {
+  "[html]": {
+    "editor.wordWrap": "on"
+  },
   "[javascript]": {
     "editor.formatOnSave": true
   }
