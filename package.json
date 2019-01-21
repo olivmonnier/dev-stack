@@ -10,6 +10,7 @@
     "copy:admin:win": "copy-cli ./packages/admin/build/**/* ./packages/site/admin",
     "prebuild": "npm run del:site:admin",
     "build": "lerna run build",
+    "build:win": "npm run del:site:admin && lerna run build && npm run copy:admin:win",
     "postbuild": "npm run copy:admin",
     "start": "cd ./packages/site && npm start",
     "admin:dev": "cd ./packages/admin && npm start",
